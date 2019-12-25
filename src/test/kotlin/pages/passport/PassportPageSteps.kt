@@ -9,26 +9,27 @@ class PassportPageSteps(driver: WebDriver) : AbstractPageSteps(driver) {
 
     override fun getPageUrl(): String = "https://passport.yandex.ru/"
 
-    fun checkLoginForm() {
-        waitUntilVisible(passportPage.loginInput)
-        waitUntilVisible(passportPage.loginInput)
-        waitUntilVisible(passportPage.buttonEnter)
-    }
-
     fun enterLogin(login: String) {
-        waitUntilVisible(passportPage.loginInput)
         passportPage.loginInput.click()
         passportPage.loginInput.sendKeys(login)
     }
 
     fun enterPassword(password: String) {
-        waitUntilVisible(passportPage.passwordInput)
         passportPage.passwordInput.sendKeys(password)
     }
 
     fun clickEnterButton() {
+        clickOnElement(passportPage.buttonEnter)
+    }
+
+    fun clickMagicButton() {
+        clickOnElement(passportPage.magicLink)
+    }
+
+    fun checkLoginForm() {
+        waitUntilVisible(passportPage.loginInput)
+        waitUntilVisible(passportPage.loginInput)
         waitUntilVisible(passportPage.buttonEnter)
-        passportPage.buttonEnter.click()
     }
 
     fun checkWrongPasswordErrorAppear() {
@@ -37,5 +38,9 @@ class PassportPageSteps(driver: WebDriver) : AbstractPageSteps(driver) {
             "Неверный пароль",
             passportPage.wrongPasswordHint.text
         )
+    }
+
+    fun checkQrCode() {
+        waitUntilVisible(passportPage.qrCode)
     }
 }

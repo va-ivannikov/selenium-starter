@@ -10,25 +10,22 @@ class MainPageSteps(driver: WebDriver) : AbstractPageSteps(driver) {
     override fun getPageUrl(): String = "https://money.yandex.ru/"
 
     fun clickButtonEnter() {
-        val buttonEnter = waitUntilVisible(mainPage.buttonEnter)
-        buttonEnter.click()
+        clickOnElement(mainPage.buttonEnter)
+    }
+
+    fun openDropDownUserMenu() {
+        clickOnElement(mainPage.userName)
+    }
+
+    fun pressLogOutButtonInMenu() {
+        clickOnElement(mainPage.logOut)
     }
 
     fun checkUserIsLogged() {
         waitUntilVisible(mainPage.userName)
     }
 
-    fun checkUserIsNotLoged() {
+    fun checkUserIsNotLogged() {
         waitElement.until { ExpectedConditions.not(ExpectedConditions.visibilityOf(mainPage.userName)) }
-    }
-
-    fun openDropDownUserMenu() {
-        waitUntilVisible(mainPage.userName)
-        mainPage.userName.click()
-    }
-
-    fun pressLogOutButtonInMenu() {
-        waitUntilVisible(mainPage.logOut)
-        mainPage.logOut.click()
     }
 }

@@ -13,7 +13,7 @@ class LoginFeatureTest : BaseTest() {
     fun prepare() {
         mainPageSteps.run {
             openThisPage()
-            checkUserIsNotLoged()
+            checkUserIsNotLogged()
         }
     }
 
@@ -37,20 +37,20 @@ class LoginFeatureTest : BaseTest() {
         }
     }
 
-    @DisplayName("Залогиненный пользователь может разлогиниться")
     @Test
+    @DisplayName("Залогиненный пользователь может разлогиниться")
     fun logout() {
         login()
         mainPageSteps.run {
             openDropDownUserMenu()
             pressLogOutButtonInMenu()
             checkThisPageIsOpened()
-            checkUserIsNotLoged()
+            checkUserIsNotLogged()
         }
     }
 
     @Test
-    @DisplayName("Пользователь не может залогиниться с неправильным паролем")
+    @DisplayName("Пользователь не может залогиниться с неправильным паролем и получает сообщение")
     fun wrongPasswordCantLogin() {
         mainPageSteps.run {
             clickButtonEnter()
@@ -63,6 +63,20 @@ class LoginFeatureTest : BaseTest() {
             enterPassword(wrongPassword)
             clickEnterButton()
             checkWrongPasswordErrorAppear()
+        }
+    }
+
+    @Test
+    @DisplayName("Пользователь может инициировать логин по qr коду")
+    fun magicQRLink() {
+        mainPageSteps.run {
+            clickButtonEnter()
+        }
+        passportPageSteps.run {
+            checkThisPageIsOpened()
+            checkLoginForm()
+            clickMagicButton()
+            checkQrCode()
         }
     }
 }

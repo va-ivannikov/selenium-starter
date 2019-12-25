@@ -15,19 +15,10 @@ abstract class AbstractPageSteps(private val driver: WebDriver) {
         driver.manage().window().maximize()
     }
 
-    fun openUrl(url: String) {
-        driver.get(url)
-        isUrlIsOpened(url)
-    }
+    abstract fun getPageUrl(): String
 
     fun openThisPage() {
         openUrl(getPageUrl())
-    }
-
-    abstract fun getPageUrl(): String
-
-    fun isUrlIsOpened(url: String) {
-        waitPage.until { it.currentUrl.startsWith(url)}
     }
 
     fun checkThisPageIsOpened() {
@@ -37,5 +28,19 @@ abstract class AbstractPageSteps(private val driver: WebDriver) {
     fun waitUntilVisible(webElement: WebElement): WebElement {
         waitElement.until { ExpectedConditions.visibilityOf(webElement) }
         return webElement
+    }
+
+    fun clickOnElement(webElement: WebElement) {
+        waitUntilVisible(webElement)
+        webElement.click()
+    }
+
+    private fun openUrl(url: String) {
+        driver.get(url)
+        isUrlIsOpened(url)
+    }
+
+    private fun isUrlIsOpened(url: String) {
+        waitPage.until { it.currentUrl.startsWith(url)}
     }
 }
